@@ -24,14 +24,14 @@ services:
 
   db:
     image: mariadb:latest
-    container_name: mySQL
+    container_name: db
     environment:
       MYSQL_DATABASE: book
       MYSQL_USER: root
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./mysql_data:/var/lib/mysql
     ports:
       - "3305:3306"
 
