@@ -16,6 +16,7 @@ use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -43,7 +44,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 ])]
 #[ApiFilter(OrderFilter::class, properties: ['id'])]
 #[ApiFilter(DateFilter::class, properties: ['createdAt'])]
-class User
+class User implements PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -79,7 +80,7 @@ class User
     #[Assert\NotBlank]
     #[Assert\Length(min: 9, max: 15)]
     #[Assert\Regex(
-        pattern: '/^[\d+]$/',
+        pattern: '/^+[\d+]$/',
         message: 'Just enter a number!',
         match: false,
     )]
@@ -91,7 +92,7 @@ class User
     private array $roles = ["ROLE_USER"];
 
     #[ORM\Column]
-    #[Groups(['user:read', 'user:write'])]
+    #[Groups(['user:read'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int
