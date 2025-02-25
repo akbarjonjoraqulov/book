@@ -11,6 +11,8 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
+use App\Component\User\FullNameDto;
+use App\Controller\FullNameDtoAction;
 use App\Controller\UserCreateAction;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
@@ -30,6 +32,12 @@ use Symfony\Component\Validator\Constraints as Assert;
             uriTemplate: 'users/my',
             controller: UserCreateAction::class,
             name: 'userCreate',
+        ),
+        new Post(
+            uriTemplate: 'users/fullName',
+            controller: FullNameDtoAction::class,
+            input: FullNameDto::class,
+            name: 'fullName',
         )
     ],
     normalizationContext: ['groups' => ['user:read']],
@@ -80,7 +88,7 @@ class User implements PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     #[Assert\Length(min: 9, max: 15)]
     #[Assert\Regex(
-        pattern: '/^+[\d+]$/',
+        pattern: '/\D/',
         message: 'Just enter a number!',
         match: false,
     )]
