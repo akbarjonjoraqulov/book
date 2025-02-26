@@ -26,8 +26,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
     operations: [
-        new GetCollection(),
-        new Get(),
+        new GetCollection(
+            security: "is_granted('ROLE_ADMIN')",
+        ),
+        new Get(
+            security: "is_granted('ROLE_ADMIN') || object == user",
+        ),
         new Delete(),
         new Post(
             uriTemplate: 'users/my',
