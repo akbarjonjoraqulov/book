@@ -15,6 +15,7 @@ use App\Component\User\FullNameDto;
 use App\Controller\AboutMeAction;
 use App\Controller\FullNameDtoAction;
 use App\Controller\UserCreateAction;
+use App\Controller\UserGetMaxAgeAction;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -34,6 +35,11 @@ use Symfony\Component\Validator\Constraints as Assert;
             uriTemplate: 'users/about_me',
             controller: AboutMeAction::class,
             name: 'about_me',
+        ),
+        new GetCollection(
+            uriTemplate: 'users/max_age',
+            controller: UserGetMaxAgeAction::class,
+            name: 'MaxAge',
         ),
         new Get(
             security: "is_granted('ROLE_ADMIN') || object == user",
