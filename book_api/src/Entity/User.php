@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Component\User\FullNameDto;
+use App\Controller\AboutMeAction;
 use App\Controller\FullNameDtoAction;
 use App\Controller\UserCreateAction;
 use App\Repository\UserRepository;
@@ -28,6 +29,11 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new GetCollection(
             security: "is_granted('ROLE_ADMIN')",
+        ),
+        new GetCollection(
+            uriTemplate: 'users/about_me',
+            controller: AboutMeAction::class,
+            name: 'about_me',
         ),
         new Get(
             security: "is_granted('ROLE_ADMIN') || object == user",

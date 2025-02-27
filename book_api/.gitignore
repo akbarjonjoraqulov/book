@@ -11,4 +11,5 @@
 /.idea
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
+/public/media/*
 ###< lexik/jwt-authentication-bundle ###

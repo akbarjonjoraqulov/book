@@ -8,6 +8,11 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use ApiPlatform\OpenApi\Model\Operation;
+use ApiPlatform\OpenApi\Model\Parameter;
+use ApiPlatform\OpenApi\Model\Response;
+use App\Controller\GetBooksByCategoryAction;
+use App\Controller\GetBooksHardExampleAction;
 use App\Repository\BookRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,6 +21,38 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[ApiResource(
     operations: [
+        new GetCollection(
+            uriTemplate: 'books/by_category',
+            controller: GetBooksByCategoryAction::class,
+            openapi: new Operation(
+                responses: [
+                    '200' => new Response(
+                        description: 'A list of books retrieved successfully.'
+                    ),
+                    '400' => new Response(
+                        description: 'Invalid category ID provided.'
+                    )
+                ],
+                summary: 'Retrieve books by category',
+                parameters: [
+                    new Parameter(
+                        name: 'categoryId',
+                        in: 'query',
+                        description: 'ID of the category for which books should be retrieved',
+                        required: true,
+                        schema: [
+                            'type' => 'integer'
+                        ]
+                    )
+                ]
+            ),
+            name: 'getBooks',
+        ),
+        new GetCollection(
+            uriTemplate: 'books/hard_example',
+            controller: GetBooksHardExampleAction::class,
+            name: 'booksHardExample',
+        ),
         new GetCollection(),
         new Post(),
         new Put(),
