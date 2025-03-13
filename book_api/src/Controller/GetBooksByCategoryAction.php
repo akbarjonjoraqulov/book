@@ -4,24 +4,37 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Book;
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class GetBooksByCategoryAction extends AbstractController
 {
-    public function __invoke(Request $request, BookRepository $bookRepository): array
+    public function __invoke(Request $request, BookRepository $bookRepository): JsonResponse
     {
         $categoryId = $request->query->get('categoryId');
-        $page = $request->query->get('page');
+        $page = $request->query->get('page', 1);
 
         if (!$categoryId) {
-            throw new BadRequestException("Invalid category id");
+            throw new BadRequestHttpException("Invalid category id");
         }
 
-        return $bookRepository->findBy(['category' => (int)$categoryId], limit: 10, offset: --$page * 10);
+        $offset = ($page - 1) * 10;
+
+        $books = $bookRepository->findBy(
+            ['category' => (int)$categoryId],
+            [],
+            10,
+            $offset
+        );
+
+        if (empty($books)) {
+            return new JsonResponse([], Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json($books);
     }
 }

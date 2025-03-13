@@ -98,6 +98,13 @@
       <excludeFolder url="file://$MODULE_DIR$/book_api/vendor/twig/twig" />
       <excludeFolder url="file://$MODULE_DIR$/book_api/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/book_api/vendor/willdurand/negotiation" />
+      <excludeFolder url="file://$MODULE_DIR$/book_api/vendor/jms/metadata" />
+      <excludeFolder url="file://$MODULE_DIR$/book_api/vendor/lcobucci/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/book_api/vendor/lcobucci/jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/book_api/vendor/lexik/jwt-authentication-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/book_api/vendor/symfony/mime" />
+      <excludeFolder url="file://$MODULE_DIR$/book_api/vendor/symfony/polyfill-intl-idn" />
+      <excludeFolder url="file://$MODULE_DIR$/book_api/vendor/vich/uploader-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
